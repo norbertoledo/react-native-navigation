@@ -16,40 +16,40 @@ import ListaPreClientesScreen from './components/ListaPreClientesScreen';
 import MapasScreen from './components/MapasScreen';
 import NotasScreen from './components/NotasScreen';
 
-// SWITCH
-const LoginSwitch = createSwitchNavigator({
-  Login: {
-    screen: LoginScreen,
-  },
-});
+
 
 
 
 //STACK
-const SectionStack = createStackNavigator({
-  Clientes: {
-    screen: ClientesScreen
-},
-Catalogo: {
-    screen: CatalogoScreen
-},
-Mapas: {
-    screen: MapasScreen
-},
-Notas: {
-    screen: NotasScreen
-},
-ListaPreClientes: {
-    screen: ListaPreClientesScreen
-},
-AnadirPreClientes: {
-    screen: AnadirPreClientesScreen
-},
-PresupuestosGuardados:{
-  screen: PresupuestosGuardadosScreen
-}
-});
-
+const SectionStack = createStackNavigator(
+  {
+    Clientes: {
+      screen: ClientesScreen
+    },
+    Catalogo: {
+        screen: CatalogoScreen
+    },
+    Mapas: {
+        screen: MapasScreen
+    },
+    Notas: {
+        screen: NotasScreen
+    },
+    ListaPreClientes: {
+        screen: ListaPreClientesScreen
+    },
+    AnadirPreClientes: {
+        screen: AnadirPreClientesScreen
+    },
+    PresupuestosGuardados:{
+      screen: PresupuestosGuardadosScreen
+    }
+  },
+  { 
+    initialRouteName: 'Clientes',    
+  }
+);
+ 
 
 // DRAWER
 const AppDrawer = createDrawerNavigator(
@@ -61,18 +61,26 @@ const AppDrawer = createDrawerNavigator(
       ListaPreClientes: SectionStack,
       AnadirPreClientes: SectionStack,
       PresupuestosGuardados:SectionStack
+  },
+  { 
+    initialRouteName: 'Clientes'
   }
 );
 
+// SWITCH
+const LoginSwitch = createSwitchNavigator({
+  Login: {
+    screen: LoginScreen,
+  },
+  App: AppDrawer
+});
+
 export default createAppContainer(
-  createSwitchNavigator(
-    {
-      Login: LoginSwitch,
-      App: AppDrawer
-    },
-    { 
-        initialRouteName: 'Login',
-        
-    }
-  )
+  
+  // LoginSwitch,
+  // { 
+  //   initialRouteName: 'Login',    
+  // }
+
+  AppDrawer
 );
