@@ -53,10 +53,11 @@ const SectionStack = createStackNavigator(
     }
   },
   { 
+    //headerMode: 'none', //Oculta todos los header del stack
     initialRouteName: 'Clientes',
     defaultNavigationOptions: { // Estilos por defecto para el header de todas las Stack
       headerStyle: {
-        backgroundColor: 'grey',// color de fondo
+        backgroundColor: 'white',// color de fondo
       },
       headerTintColor: 'white',// color de TODOS los elementos del header
       headerTitleStyle: {

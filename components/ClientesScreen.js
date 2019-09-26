@@ -1,6 +1,9 @@
 import React, {useEffect} from 'react'
 import { View, Text, StyleSheet, Button, TouchableHighlight } from 'react-native'
 
+
+import { Ionicons } from '@expo/vector-icons';
+
 const ClientesScreen = ({navigation}) => {
     
     // const parent = navigation.dangerouslyGetParent();
@@ -39,17 +42,23 @@ const CustomHeader = ()=>{
 
 const CustomLeft = ({nav}) => {
     return (
-        <Button
-            title='MENU'
+        <Ionicons 
+            style={{marginLeft: 10}}
+            name="ios-menu"
+            size={32} 
+            color="black"
             onPress={()=>nav.toggleDrawer()}
-            //onPress={()=>console.log(nav)}
         />
+        
     )
 }
 const CustomRight = ({nav}) => {
     return (
-        <Button
-            title='CARRITO'
+        <Ionicons
+            style={{marginRight: 10}}
+            name="ios-cart"
+            size={28}
+            color='black'
             onPress={()=>nav.navigate('Carrito')}
             // onPress={()=>nav.getParam('verCarrito')}
             //onPress={()=>console.log(nav)}
