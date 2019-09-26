@@ -17,7 +17,8 @@ import MapasScreen from './components/MapasScreen';
 import NotasScreen from './components/NotasScreen';
 
 
-
+import ClienteDetalleScreen from './components/ClienteDetalleScreen';
+import CarritoScreen from './components/CarritoScreen';
 
 
 //STACK
@@ -43,10 +44,26 @@ const SectionStack = createStackNavigator(
     },
     PresupuestosGuardados:{
       screen: PresupuestosGuardadosScreen
+    },
+    ClienteDetalle:{
+      screen: ClienteDetalleScreen
+    },
+    Carrito:{
+      screen: CarritoScreen
     }
   },
   { 
-    initialRouteName: 'Clientes',    
+    initialRouteName: 'Clientes',
+    defaultNavigationOptions: { // Estilos por defecto para el header de todas las Stack
+      headerStyle: {
+        backgroundColor: 'grey',// color de fondo
+      },
+      headerTintColor: 'white',// color de TODOS los elementos del header
+      headerTitleStyle: {
+          fontWeight: '200',
+          fontSize: 10,
+      }
+    }  
   }
 );
  
