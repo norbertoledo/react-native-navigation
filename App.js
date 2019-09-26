@@ -23,40 +23,46 @@ const LoginSwitch = createSwitchNavigator({
   },
 });
 
+
+
+//STACK
+const SectionStack = createStackNavigator({
+  Clientes: {
+    screen: ClientesScreen
+},
+Catalogo: {
+    screen: CatalogoScreen
+},
+Mapas: {
+    screen: MapasScreen
+},
+Notas: {
+    screen: NotasScreen
+},
+ListaPreClientes: {
+    screen: ListaPreClientesScreen
+},
+AnadirPreClientes: {
+    screen: AnadirPreClientesScreen
+},
+PresupuestosGuardados:{
+  screen: PresupuestosGuardadosScreen
+}
+});
+
+
 // DRAWER
 const AppDrawer = createDrawerNavigator(
   {
-      Clientes: {
-          screen: ClientesScreen
-      },
-      Catalogo: {
-          screen: CatalogoScreen
-      },
-      Mapas: {
-          screen: MapasScreen
-      },
-      Notas: {
-          screen: NotasScreen
-      },
-      ListaPreClientes: {
-          screen: ListaPreClientesScreen
-      },
-      AnadirPreClientes: {
-          screen: AnadirPreClientesScreen
-      },
-      PresupuestosGuardados:{
-        screen: PresupuestosGuardadosScreen
-      }
+      Clientes: SectionStack,
+      Catalogo: SectionStack,
+      Mapas: SectionStack,
+      Notas: SectionStack,
+      ListaPreClientes: SectionStack,
+      AnadirPreClientes: SectionStack,
+      PresupuestosGuardados:SectionStack
   }
 );
-
-// STACK
-// const AppNavigator = createStackNavigator({
-//   Home: {
-//     screen: HomeScreen,
-//   },
-// });
-
 
 export default createAppContainer(
   createSwitchNavigator(
