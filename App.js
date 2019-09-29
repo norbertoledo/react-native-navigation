@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import {createDrawerNavigator} from 'react-navigation-drawer';
-
+import {createDrawerNavigator, DrawerItems} from 'react-navigation-drawer';
+import * as Font from 'expo-font';
 
 // SCREENS
 import LoginScreen from './components/LoginScreen';
@@ -19,86 +19,205 @@ import NotasScreen from './components/NotasScreen';
 
 import ClienteDetalleScreen from './components/ClienteDetalleScreen';
 import CarritoScreen from './components/CarritoScreen';
+import LogoutScreen from './components/LogoutScreen';
+import HomeScreen from './components/HomeScreen';
 
 
-//STACK
-const SectionStack = createStackNavigator(
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+//import CustomDrawer from './components/CustomDrawer';
+
+
+// DRAWER
+// const drawerNavigator = createDrawerNavigator(
+//   {
+//     Home: {
+//       screen: HomeScreen
+//     },
+//     Clientes: {
+//       screen: ClientesScreen
+//     },
+//     Catalogo: {
+//         screen: CatalogoScreen
+//     },
+//     Logout:{
+//       screen: LogoutScreen
+//     }
+    
+//   }
+// );
+
+// const stackNavigator = createStackNavigator(
+//   {
+//     defaultHome: drawerNavigator
+//   },
+//   {
+//     defaultNavigationOptions:{
+//       headerStyle: {
+//         backgroundColor: 'purple'
+//       },
+//       headerTintColor: 'yellow',
+//       headerTitleStyle:{
+//         fontWeight: 'bold'
+//       }
+//     }
+//   }
+// )
+// const switchNavigator = createSwitchNavigator(
+//   {
+//     Login: { screen: LoginScreen },
+//     App:{ screen: stackNavigator }
+//   },
+//   {
+//     initialRouteName: 'Login'
+//   }
+// )
+//export default createAppContainer(switchNavigator);
+
+
+// const AppContainer = createAppContainer(LoginSwitch);
+
+// export default App =()=>{
+//   return(<AppContainer/>)
+// }
+
+
+
+
+
+
+
+
+const stackHome = createStackNavigator(
+  {
+    Home: {
+      screen: HomeScreen
+    }
+  }
+);
+const stackClientes = createStackNavigator(
   {
     Clientes: {
       screen: ClientesScreen
-    },
-    Catalogo: {
-        screen: CatalogoScreen
-    },
-    Mapas: {
-        screen: MapasScreen
-    },
-    Notas: {
-        screen: NotasScreen
-    },
-    ListaPreClientes: {
-        screen: ListaPreClientesScreen
-    },
-    AnadirPreClientes: {
-        screen: AnadirPreClientesScreen
-    },
-    PresupuestosGuardados:{
-      screen: PresupuestosGuardadosScreen
-    },
-    ClienteDetalle:{
-      screen: ClienteDetalleScreen
-    },
-    Carrito:{
-      screen: CarritoScreen
     }
-  },
-  { 
-    //headerMode: 'none', //Oculta todos los header del stack
-    initialRouteName: 'Clientes',
-    defaultNavigationOptions: { // Estilos por defecto para el header de todas las Stack
-      headerStyle: {
-        backgroundColor: 'white',// color de fondo
-      },
-      headerTintColor: 'white',// color de TODOS los elementos del header
-      headerTitleStyle: {
-          fontWeight: '200',
-          fontSize: 10,
-      }
-    }  
   }
 );
- 
+const stackCatalogo = createStackNavigator(
+  {
+    Catalogo: {
+      screen: CatalogoScreen
+    }
+  }
+);
+
+const CustomDrawer = (props) => (
+
+  <View>
+      {/* <DrawerItems
+          {...props}
+          activeBackgroundColor={"black"}
+          activeTintColor={"white"}
+          iconContainerStyle={styles.icons}
+      /> */}
+      <DrawerItems 
+          {...props}
+          activeTintColor='#2196f3' 
+          activeBackgroundColor='rgba(0, 0, 0, .04)' 
+          inactiveTintColor='rgba(0, 0, 0, .87)' 
+          inactiveBackgroundColor='transparent' 
+          style={{backgroundColor: '#000000'}} 
+          labelStyle={{color: '#ffffff'}}/>
+  </View>
+)
+
+
 
 // DRAWER
-const AppDrawer = createDrawerNavigator(
+const drawerNavigator = createDrawerNavigator(
   {
-      Clientes: SectionStack,
-      Catalogo: SectionStack,
-      Mapas: SectionStack,
-      Notas: SectionStack,
-      ListaPreClientes: SectionStack,
-      AnadirPreClientes: SectionStack,
-      PresupuestosGuardados:SectionStack
+    
+    Home: {
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+            <Ionicons name="md-home" size={25} style={{ color: tintColor }} />
+        ),
+        drawerLabel: "Home"
+      },
+      screen: stackHome
+    },
+    Clientes: {
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+            <Ionicons name="ios-people" size={25} style={{ color: tintColor }} />
+        ),
+        drawerLabel: "Cosumers"
+      },
+      screen: stackClientes
+    },
+    Catalogo: {
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+            <Ionicons name="ios-book" size={25} style={{ color: tintColor }} />
+        ),
+        drawerLabel: "Products"
+      },
+      screen: stackCatalogo
+    },
+    Logout:{
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+            <Ionicons name="ios-exit" size={25} style={{ color: tintColor }} />
+        ),
+        drawerLabel: "Logout"
+      },
+      screen: LogoutScreen
+    },
   },
-  { 
-    initialRouteName: 'Clientes'
+  {
+    //contentComponent: CustomDrawer
   }
 );
-
-// SWITCH
-const LoginSwitch = createSwitchNavigator({
-  Login: {
-    screen: LoginScreen,
+const switchNavigator = createSwitchNavigator(
+  {
+    Login: { screen: LoginScreen },
+    App:{ screen: drawerNavigator }
   },
-  App: AppDrawer
-});
+  {
+    initialRouteName: 'Login'
+  }
+)
 
-export default createAppContainer(
+//export default createAppContainer(switchNavigator);
+
+const AppContainer = createAppContainer(switchNavigator);
+
+export default App =()=>{
+
+  const [isLoadingFonts, setIsLoadingFonts] = useState(true);
   
-  // LoginSwitch,
-  // { 
-  //   initialRouteName: 'Login',    
-  // }
+  let loadFonts = async () =>{
+    await Font.loadAsync({
+      'open-sans-light': require('./assets/fonts/Open_Sans/OpenSans-Light.ttf'),
+      'open-sans-regular': require('./assets/fonts/Open_Sans/OpenSans-Regular.ttf'),
+      'open-sans-bold': require('./assets/fonts/Open_Sans/OpenSans-Bold.ttf'),
+    });
+    setIsLoadingFonts(false);
+  }
 
-  AppDrawer
-);
+  useEffect(
+    ()=>{
+      loadFonts();
+    },[]
+  );
+
+  if(isLoadingFonts){
+    return (
+      <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+        <Text>Loading Fonts...</Text>
+      </View>
+    )
+  }else{
+    loadFonts = null
+    return <AppContainer theme="light"/>
+  }
+  
+ }
